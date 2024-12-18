@@ -124,7 +124,7 @@ class AsyncClient(_ClientCore):  # pylint: disable=too-many-public-methods
         response = await self._provider.make_request(body, GetHealthResp)
         return response.value == "ok"
 
-    async def get_balance(self, pubkey: Pubkey, commitment: Optional[Commitment] = None) -> GetBalanceResp:
+    async def get_balance(self, pubkey: Pubkey, commitment: Optional[Commitment] = None, min_context_slot: Optional[int] = None) -> GetBalanceResp:
         """Returns the balance of the account of provided Pubkey.
 
         Args:
@@ -137,7 +137,7 @@ class AsyncClient(_ClientCore):  # pylint: disable=too-many-public-methods
             >>> (await solana_client.get_balance(Pubkey([0] * 31 + [1]))).value # doctest: +SKIP
             0
         """
-        body = self._get_balance_body(pubkey, commitment)
+        body = self._get_balance_body(pubkey, commitment, min_context_slot)
         return await self._provider.make_request(body, GetBalanceResp)
 
     async def get_account_info(

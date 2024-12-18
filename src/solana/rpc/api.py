@@ -113,7 +113,7 @@ class Client(_ClientCore):  # pylint: disable=too-many-public-methods
         response = self._provider.make_request(body, GetHealthResp)
         return response.value == "ok"
 
-    def get_balance(self, pubkey: Pubkey, commitment: Optional[Commitment] = None) -> GetBalanceResp:
+    def get_balance(self, pubkey: Pubkey, commitment: Optional[Commitment] = None, min_context_slot: Optional[int] = None) -> GetBalanceResp:
         """Returns the balance of the account of provided Pubkey.
 
         Args:
@@ -126,7 +126,7 @@ class Client(_ClientCore):  # pylint: disable=too-many-public-methods
             >>> solana_client.get_balance(Pubkey([0] * 31 + [1])).value # doctest: +SKIP
             4104230290
         """
-        body = self._get_balance_body(pubkey, commitment)
+        body = self._get_balance_body(pubkey, commitment, min_context_slot)
         return self._provider.make_request(body, GetBalanceResp)
 
     def get_account_info(

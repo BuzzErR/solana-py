@@ -161,9 +161,9 @@ class _ClientCore:  # pylint: disable=too-few-public-methods
     def _get_health_body(self) -> GetHealth:
         return GetHealth()
 
-    def _get_balance_body(self, pubkey: Pubkey, commitment: Optional[Commitment]) -> GetBalance:
+    def _get_balance_body(self, pubkey: Pubkey, commitment: Optional[Commitment], min_context_slot: Optional[int]) -> GetBalance:
         commitment_to_use = _COMMITMENT_TO_SOLDERS[commitment or self._commitment]
-        return GetBalance(pubkey, RpcContextConfig(commitment=commitment_to_use))
+        return GetBalance(pubkey, RpcContextConfig(commitment=commitment_to_use, min_context_slot=min_context_slot))
 
     def _get_account_info_body(
         self,
